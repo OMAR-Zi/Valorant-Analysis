@@ -8,7 +8,7 @@ This is **post-match classification**, not pre-match prediction. It uses ACS, co
 
 ## Dataset
 
-The source is the local `valorantchampiontour/` VCT CSV collection for 2021–2026. The source is reproduced in `data/reports/source_file_audit.csv`. The unit of analysis is one team-map observation. A valid map produces one win row and one loss row.
+Downloaded from https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data. Unzip it in the project and name it valorantchampiontour. The source is reproduced in `data/reports/source_file_audit.csv`. The unit of analysis is one team-map observation. A valid map produces one win row and one loss row.
 
 ## Reproduce
 
