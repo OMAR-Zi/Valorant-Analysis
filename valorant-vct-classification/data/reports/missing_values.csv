@@ -1,0 +1,134 @@
+,missing_count,missing_pct
+Tournament,0,0.0
+Stage,0,0.0
+Match Type,0,0.0
+Match Name,0,0.0
+Map,0,0.0
+source_year,0,0.0
+Match ID,0,0.0
+Game ID,0,0.0
+Team,0,0.0
+team_Rating_mean,11818,21.668500183351668
+team_Rating_sum,11818,21.668500183351668
+team_Average Combat Score_mean,84,0.15401540154015403
+team_Average Combat Score_sum,84,0.15401540154015403
+team_Kills_mean,6,0.011001100110011
+team_Kills_sum,6,0.011001100110011
+team_Deaths_mean,6,0.011001100110011
+team_Deaths_sum,6,0.011001100110011
+team_Assists_mean,6,0.011001100110011
+team_Assists_sum,6,0.011001100110011
+team_Kills - Deaths (KD)_mean,6,0.011001100110011
+team_Kills - Deaths (KD)_sum,6,0.011001100110011
+"team_Kill, Assist, Trade, Survive %_mean",11784,21.606160616061608
+"team_Kill, Assist, Trade, Survive %_sum",11784,21.606160616061608
+team_Average Damage Per Round_mean,742,1.3604693802713606
+team_Average Damage Per Round_sum,742,1.3604693802713606
+team_Headshot %_mean,736,1.3494682801613496
+team_Headshot %_sum,736,1.3494682801613496
+team_First Kills_mean,674,1.2357902456912357
+team_First Kills_sum,674,1.2357902456912357
+team_First Deaths_mean,739,1.354968830216355
+team_First Deaths_sum,739,1.354968830216355
+team_Kills - Deaths (FKD)_mean,739,1.354968830216355
+team_Kills - Deaths (FKD)_sum,739,1.354968830216355
+composition_player_count,0,0.0
+agent_astra,0,0.0
+agent_breach,0,0.0
+agent_brimstone,0,0.0
+agent_cypher,0,0.0
+agent_jett,0,0.0
+agent_kayo,0,0.0
+agent_killjoy,0,0.0
+agent_omen,0,0.0
+agent_phoenix,0,0.0
+agent_raze,0,0.0
+agent_reyna,0,0.0
+agent_sage,0,0.0
+agent_skye,0,0.0
+agent_sova,0,0.0
+agent_viper,0,0.0
+agent_yoru,0,0.0
+win,0,0.0
+opponent_team,0,0.0
+opponent_team_Rating_mean,11818,21.668500183351668
+opponent_team_Rating_sum,11818,21.668500183351668
+opponent_team_Average Combat Score_mean,84,0.15401540154015403
+opponent_team_Average Combat Score_sum,84,0.15401540154015403
+opponent_team_Kills_mean,6,0.011001100110011
+opponent_team_Kills_sum,6,0.011001100110011
+opponent_team_Deaths_mean,6,0.011001100110011
+opponent_team_Deaths_sum,6,0.011001100110011
+opponent_team_Assists_mean,6,0.011001100110011
+opponent_team_Assists_sum,6,0.011001100110011
+opponent_team_Kills - Deaths (KD)_mean,6,0.011001100110011
+opponent_team_Kills - Deaths (KD)_sum,6,0.011001100110011
+"opponent_team_Kill, Assist, Trade, Survive %_mean",11784,21.606160616061608
+"opponent_team_Kill, Assist, Trade, Survive %_sum",11784,21.606160616061608
+opponent_team_Average Damage Per Round_mean,742,1.3604693802713606
+opponent_team_Average Damage Per Round_sum,742,1.3604693802713606
+opponent_team_Headshot %_mean,736,1.3494682801613496
+opponent_team_Headshot %_sum,736,1.3494682801613496
+opponent_team_First Kills_mean,674,1.2357902456912357
+opponent_team_First Kills_sum,674,1.2357902456912357
+opponent_team_First Deaths_mean,739,1.354968830216355
+opponent_team_First Deaths_sum,739,1.354968830216355
+opponent_team_Kills - Deaths (FKD)_mean,739,1.354968830216355
+opponent_team_Kills - Deaths (FKD)_sum,739,1.354968830216355
+opponent_agent_counts,0,0.0
+opponent_agent_astra,0,0.0
+opponent_agent_breach,0,0.0
+opponent_agent_brimstone,0,0.0
+opponent_agent_cypher,0,0.0
+opponent_agent_jett,0,0.0
+opponent_agent_kayo,0,0.0
+opponent_agent_killjoy,0,0.0
+opponent_agent_omen,0,0.0
+opponent_agent_phoenix,0,0.0
+opponent_agent_raze,0,0.0
+opponent_agent_reyna,0,0.0
+opponent_agent_sage,0,0.0
+opponent_agent_skye,0,0.0
+opponent_agent_sova,0,0.0
+opponent_agent_viper,0,0.0
+opponent_agent_yoru,0,0.0
+relative_Rating_mean,11818,21.668500183351668
+relative_Average Combat Score_mean,84,0.15401540154015403
+relative_Kills_mean,6,0.011001100110011
+relative_Deaths_mean,6,0.011001100110011
+relative_Assists_mean,6,0.011001100110011
+relative_Kills - Deaths (KD)_mean,6,0.011001100110011
+"relative_Kill, Assist, Trade, Survive %_mean",11784,21.606160616061608
+relative_Average Damage Per Round_mean,742,1.3604693802713606
+relative_Headshot %_mean,736,1.3494682801613496
+relative_First Kills_mean,674,1.2357902456912357
+relative_First Deaths_mean,740,1.3568023469013568
+relative_Kills - Deaths (FKD)_mean,740,1.3568023469013568
+agent_chamber,28660,52.54858819215254
+agent_fade,28660,52.54858819215254
+agent_neon,28660,52.54858819215254
+opponent_agent_chamber,28660,52.54858819215254
+opponent_agent_fade,28660,52.54858819215254
+opponent_agent_neon,28660,52.54858819215254
+agent_gekko,46348,84.97983131646498
+agent_harbor,46348,84.97983131646498
+opponent_agent_gekko,46348,84.97983131646498
+opponent_agent_harbor,46348,84.97983131646498
+agent_clove,48008,88.02346901356802
+agent_deadlock,48008,88.02346901356802
+agent_iso,48008,88.02346901356802
+opponent_agent_clove,48008,88.02346901356802
+opponent_agent_deadlock,48008,88.02346901356802
+opponent_agent_iso,48008,88.02346901356802
+agent_tejo,50216,92.07187385405207
+agent_vyse,50216,92.07187385405207
+agent_waylay,50216,92.07187385405207
+opponent_agent_tejo,50216,92.07187385405207
+opponent_agent_vyse,50216,92.07187385405207
+opponent_agent_waylay,50216,92.07187385405207
+agent_miks,52768,96.75100843417675
+agent_veto,52768,96.75100843417675
+opponent_agent_miks,52768,96.75100843417675
+opponent_agent_veto,52768,96.75100843417675
+map_key,0,0.0
+match_key,0,0.0

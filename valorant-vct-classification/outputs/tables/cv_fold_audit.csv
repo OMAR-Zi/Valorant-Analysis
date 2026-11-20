@@ -1,0 +1,5 @@
+fold,train_rows,validation_rows,train_matches,validation_matches
+1,32714,10908,7570,2523
+2,32718,10904,7550,2543
+3,32718,10904,7581,2512
+4,32716,10906,7578,2515
