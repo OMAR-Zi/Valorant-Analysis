@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,7 +13,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score,
                              roc_auc_score, confusion_matrix, ConfusionMatrixDisplay,
-                             RocCurveDisplay)
+                             RocCurveDisplay, roc_curve)
 import joblib
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,12 +77,29 @@ for c in [c for c in df.select_dtypes(include=np.number).columns
 outlier_df=pd.DataFrame(outlier_rows).sort_values("outlier_pct",ascending=False)
 outlier_df.to_csv(TABLE/"outlier_iqr_summary.csv",index=False)
 
-# Separate predictor features from metadata and leakage fields.
+# Separate predictors from metadata and outcome fields. Match ID is grouping-only;
+# Game ID is map-traceability-only, and neither is a model predictor.
 metadata = {"win","map_key","match_key","Team","opponent_team","map_winner",
             "Match Name","Team A","Team B","Team A Score","Team B Score",
-            "composition_player_count","agent_counts"}
+            "Match ID","Game ID","composition_player_count","agent_counts"}
 exclude_prefix = ("Team A", "Team B")
-feature_cols = [c for c in df.columns if c not in metadata and not c.startswith(exclude_prefix)]
+
+def outcome_field(column):
+    lowered = column.lower()
+    return (lowered in {"win","map_winner","team a","team b","team a score","team b score"}
+            or any(p in lowered for p in ("winner","score","win_loss","win-loss","win loss")))
+
+feature_cols = [c for c in df.columns
+                if c not in metadata
+                and not c.startswith(exclude_prefix)
+                and not outcome_field(c)]
+
+# Scientific guards: identifiers and direct outcome fields must never enter X.
+for forbidden in ("win","map_winner","Match ID","Game ID","Team A Score","Team B Score"):
+    assert forbidden not in feature_cols, f"Forbidden predictor: {forbidden}"
+assert len(feature_cols) == 119, f"Expected 119 predictors, found {len(feature_cols)}"
+assert "Match ID" not in feature_cols and "Game ID" not in feature_cols
+
 cat_cols = [c for c in ["Tournament","Stage","Match Type","source_year","Map"] if c in feature_cols]
 num_cols = [c for c in feature_cols if c not in cat_cols and pd.api.types.is_numeric_dtype(df[c])]
 
@@ -137,22 +155,71 @@ for name,search in [("Logistic Regression",log),("Random Forest",rf)]:
     plt.title(f"{name}: Confusion Matrix")
     plt.tight_layout(); plt.savefig(FIG/(name.lower().replace(" ","_")+"_confusion_matrix.png"),dpi=160); plt.close()
 
-    RocCurveDisplay.from_predictions(y_test,prob)
+    fpr, tpr, _ = roc_curve(y_test, prob)
+    plt.figure(figsize=(7,5))
+    plt.plot(fpr,tpr,color="#8f1d22",lw=2,label=f"AUC = {roc_auc_score(y_test,prob):.6f}")
+    plt.plot([0,1],[0,1],linestyle="--",color="#777777")
+    plt.xlabel("False Positive Rate"); plt.ylabel("True Positive Rate")
     plt.title(f"{name}: ROC Curve")
+    plt.legend(loc="lower right")
     plt.tight_layout(); plt.savefig(FIG/(name.lower().replace(" ","_")+"_roc.png"),dpi=160); plt.close()
 
 comparison=pd.DataFrame(results)
 comparison.to_csv(TABLE/"model_comparison.csv",index=False)
-pd.DataFrame({"fold":[i+1 for i in range(4)],
-              "train_rows":[len(tr) for tr,va in cv_splits],
-              "validation_rows":[len(va) for tr,va in cv_splits],
-              "train_matches":[groups_train.iloc[tr].nunique() for tr,va in cv_splits],
-              "validation_matches":[groups_train.iloc[va].nunique() for tr,va in cv_splits]}).to_csv(TABLE/"cv_fold_audit.csv",index=False)
+
+cv_audit=pd.DataFrame({
+    "fold":[i+1 for i in range(4)],
+    "train_rows":[len(tr) for tr,va in cv_splits],
+    "validation_rows":[len(va) for tr,va in cv_splits],
+    "train_matches":[groups_train.iloc[tr].nunique() for tr,va in cv_splits],
+    "validation_matches":[groups_train.iloc[va].nunique() for tr,va in cv_splits],
+    "train_validation_match_overlap":[len(set(groups_train.iloc[tr]) & set(groups_train.iloc[va])) for tr,va in cv_splits]
+})
+cv_audit.to_csv(TABLE/"cv_fold_audit.csv",index=False)
 
 joblib.dump(log.best_estimator_,MODEL/"logistic_regression.joblib")
 joblib.dump(rf.best_estimator_,MODEL/"random_forest.joblib")
 
+plot_df=comparison.set_index("Model")[["Test accuracy","Test F1","Test ROC-AUC"]]
+ax=plot_df.plot(kind="bar",figsize=(9,5),ylim=(0.90,1.0),color=["#8f1d22","#5a5a5a","#b9b9b9"])
+ax.set_title("Independent test metrics")
+ax.set_ylabel("Score")
+ax.set_xlabel("")
+ax.legend(loc="lower right")
+plt.xticks(rotation=0)
+plt.tight_layout()
+plt.savefig(FIG/"model_comparison.png",dpi=180)
+plt.close()
+
+train_match_set=set(groups_train)
+test_match_set=set(groups_test)
+audit={
+    "experiment":"canonical identifier-audited experiment",
+    "data_rows":len(df),
+    "data_maps":int(df["map_key"].nunique()),
+    "data_matches":int(groups.nunique()),
+    "predictor_count_original_script":126,
+    "predictor_count_corrected":len(feature_cols),
+    "excluded_match_identifier":"Match ID",
+    "excluded_map_identifier":"Game ID",
+    "target":"win",
+    "direct_outcome_fields_excluded":["win","map_winner","Team A","Team B","Team A Score","Team B Score"],
+    "train_rows":len(X_train),
+    "test_rows":len(X_test),
+    "train_matches":len(train_match_set),
+    "test_matches":len(test_match_set),
+    "train_test_match_overlap":len(train_match_set & test_match_set),
+    "cv_fold_match_overlap_counts":cv_audit["train_validation_match_overlap"].tolist(),
+    "cross_validation":"4-fold StratifiedGroupKFold grouped by Match ID; shuffle=True; random_state=42",
+    "models":results
+}
+with open(TABLE/"experiment_audit.json","w",encoding="utf-8") as handle:
+    json.dump(audit,handle,indent=2)
+
 print(comparison.to_string(index=False))
-print("Train/test match overlap:", bool(set(groups_train) & set(groups_test)))
-print("Matched train/test match overlap count:", len(set(groups_train) & set(groups_test)))
+print("Train/test match overlap:", bool(train_match_set & test_match_set))
+print("Matched train/test match overlap count:", len(train_match_set & test_match_set))
+print("CV fold match overlap counts:", cv_audit["train_validation_match_overlap"].tolist())
+print("Numeric predictors:", len(num_cols))
+print("Categorical predictors:", len(cat_cols))
 print("Predictor count:",len(feature_cols))

@@ -1,0 +1,55 @@
+{
+  "experiment": "canonical identifier-audited experiment",
+  "data_rows": 54540,
+  "data_maps": 27270,
+  "data_matches": 12617,
+  "predictor_count_original_script": 126,
+  "predictor_count_corrected": 119,
+  "excluded_match_identifier": "Match ID",
+  "excluded_map_identifier": "Game ID",
+  "target": "win",
+  "direct_outcome_fields_excluded": [
+    "win",
+    "map_winner",
+    "Team A",
+    "Team B",
+    "Team A Score",
+    "Team B Score"
+  ],
+  "train_rows": 43622,
+  "test_rows": 10918,
+  "train_matches": 10093,
+  "test_matches": 2524,
+  "train_test_match_overlap": 0,
+  "cv_fold_match_overlap_counts": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "cross_validation": "4-fold StratifiedGroupKFold grouped by Match ID; shuffle=True; random_state=42",
+  "models": [
+    {
+      "Model": "Logistic Regression",
+      "CV mean F1": 0.9584153660827117,
+      "CV std F1": 0.0025772091748803637,
+      "Test accuracy": 0.9560359040117238,
+      "Test precision": 0.9560359040117238,
+      "Test recall": 0.9560359040117238,
+      "Test F1": 0.9560359040117238,
+      "Test ROC-AUC": 0.9917797516103742,
+      "Best parameters": "{'model__C': 10.0, 'model__class_weight': None, 'model__solver': 'liblinear'}"
+    },
+    {
+      "Model": "Random Forest",
+      "CV mean F1": 0.9558055117073957,
+      "CV std F1": 0.002825277286345768,
+      "Test accuracy": 0.9537461073456677,
+      "Test precision": 0.9534968875869645,
+      "Test recall": 0.9540208829455944,
+      "Test F1": 0.9537588132954857,
+      "Test ROC-AUC": 0.9922080136356615,
+      "Best parameters": "{'model__max_depth': None, 'model__max_features': 'sqrt', 'model__min_samples_leaf': 2, 'model__n_estimators': 200}"
+    }
+  ]
+}
