@@ -93,11 +93,4 @@ Corrected charts, tables, models, and audit documentation are in `outputs/figure
 - The original 126-column baseline is not leakage-safe by its identifier audit and must not be used as the final reported result.
 - The corrected run excludes `Match ID` and `Game ID`, while retaining `Match ID` only for grouping and `Game ID` only for traceability.
 
-## 10. Original-versus-corrected comparison
 
-| Model | Original test accuracy | Corrected test accuracy | Original test F1 | Corrected test F1 | Original ROC-AUC | Corrected ROC-AUC |
-|---|---:|---:|---:|---:|---:|---:|
-| Logistic Regression | 0.955853 | 0.956036 | 0.955853 | 0.956036 | 0.991830 | 0.991780 |
-| Random Forest | 0.953013 | 0.953746 | 0.953000 | 0.953759 | 0.992125 | 0.992208 |
-
-The differences are small, indicating that identifier removal did not substantially reverse the model ranking. The original artifacts remain unchanged for reproducibility and comparison.
